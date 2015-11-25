@@ -1,0 +1,25 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module is="ps-chart">
+    <template>
+        <iron-ajax
+            auto
+            url="http://localhost:8000/"
+            handle-as="json"
+            on-response="handleResponse"></iron-ajax>
+
+        <h1>Chart</h1>
+    </template>
+</dom-module>
+
+<script>
+    (function () {
+        Polymer({
+            is: 'ps-chart',
+            handleResponse: function (event) {
+                console.log(event.detail.response);
+            }
+        });
+    }());
+</script>

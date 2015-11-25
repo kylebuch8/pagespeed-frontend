@@ -1,0 +1,63 @@
+<dom-module is="ps-app">
+    <template>
+        <style is="custom-style">
+            :root {
+                --app-secondary-color: #041321;
+                --app-secondary-text-color: #FBFBFB;
+                --app-tertiary-color: #C0232B;
+                --left-nav-item-bg: #0A1726;
+            }
+
+            iron-pages {
+                height: 100%;
+            }
+
+            app-drawer-layout {
+                --app-drawer-background-color: var(--app-secondary-color);
+            }
+
+            .nav-menu {
+                font-family: "Open sans", sans-serif;
+                font-size: 14px;
+                color: var(--app-secondary-text-color);
+            }
+
+            .nav-menu > a {
+                background-color: var(--left-nav-item-bg);
+                display: block;
+                padding: 16px;
+                border-bottom: 1px solid #23313F;
+                text-transform: uppercase;
+            }
+        </style>
+
+        <app-drawer-layout>
+            <div drawer>
+                <iron-selector class="nav-menu" selected="{{page}}" attr-for-selected="name">
+                    <a name="score">Home</a>
+                    <a name="chart">Chart</a>
+                </iron-selector>
+            </div>
+            <div main>
+                <iron-pages selected="{{page}}" attr-for-selected="name">
+                    <ps-score name="score"></ps-score>
+                    <ps-chart name="chart"></ps-chart>
+                </iron-pages>
+            </div>
+        </app-drawer-layout>
+    </template>
+</dom-module>
+
+<script>
+    (function () {
+        Polymer({
+            is: 'ps-app',
+            properties: {
+                page: {
+                    type: String,
+                    value: 'score'
+                }
+            }
+        });
+    }());
+</script>
