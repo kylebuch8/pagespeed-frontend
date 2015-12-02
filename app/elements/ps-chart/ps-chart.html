@@ -1,8 +1,17 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../chartjs-element/chartjs-element.html">
 
 <dom-module is="ps-chart">
     <template>
+        <style>
+            :host {
+                height: 100%;
+                box-sizing: border-box;
+                padding: 16px;
+                @apply(--layout-vertical);
+            }
+        </style>
         <iron-ajax
             auto
             url="http://localhost:8000/"
@@ -10,6 +19,8 @@
             on-response="handleResponse"></iron-ajax>
 
         <h1>Chart</h1>
+        <canvas id="myChart" width="1000" height="600"></canvas>
+
     </template>
 </dom-module>
 
@@ -17,8 +28,65 @@
     (function () {
         Polymer({
             is: 'ps-chart',
+            properties: {
+                data: Object,
+                isActive: {
+                    type: Boolean,
+                    value: false,
+                    observer: '_isActiveChanged'
+                }
+            },
+            _isActiveChanged: function () {
+                if (this.isActive) {
+                    var labels = [];
+                    var desktop = {
+                        label: 'Desktop',
+                        fillColor: "rgba(220,220,220,0.2)",
+                        strokeColor: "rgba(220,220,220,1)",
+                        pointColor: "rgba(220,220,220,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: []
+                    };
+
+                    var mobile = {
+                        label: 'Mobile',
+                        fillColor: "rgba(151,187,205,0.2)",
+                        strokeColor: "rgba(151,187,205,1)",
+                        pointColor: "rgba(151,187,205,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(151,187,205,1)",
+                        data: []
+                    };
+
+                    this.data.forEach(function (datum) {
+                        labels.push(datum.date);
+
+                        datum.results.forEach(function (result) {
+                            if (result.strategy === 'mobile') {
+                                mobile.data.push(result.ruleGroups.SPEED.score);
+                            } else {
+                                desktop.data.push(result.ruleGroups.SPEED.score);
+                            }
+                        });
+                    });
+
+                    var data = {
+                        labels: labels,
+                        datasets: [desktop, mobile]
+                    };
+
+                    var ctx = this.$.myChart.getContext("2d");
+                    var chartDisplay = new Chart(ctx);
+                    chartDisplay.Line(data, {
+                        scaleBeginAtZero: true
+                    });
+                }
+            },
             handleResponse: function (event) {
-                console.log(event.detail.response);
+                this.data = event.detail.response;
             }
         });
     }());

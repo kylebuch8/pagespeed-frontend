@@ -41,7 +41,7 @@
             <div main>
                 <iron-pages selected="{{page}}" attr-for-selected="name">
                     <ps-score name="score"></ps-score>
-                    <ps-chart name="chart"></ps-chart>
+                    <ps-chart id="chart" name="chart"></ps-chart>
                 </iron-pages>
             </div>
         </app-drawer-layout>
@@ -57,6 +57,17 @@
                     type: String,
                     value: 'score'
                 }
+            },
+            behaviors: [Polymer.IronSelectableBehavior],
+            listeners: {
+                'iron-select': 'onPageSelect',
+                'iron-deselect': 'onPageDeselect'
+            },
+            onPageSelect: function (event) {
+                event.detail.item.isActive = true;
+            },
+            onPageDeselect: function (event) {
+                event.detail.item.isActive = false;
             }
         });
     }());
