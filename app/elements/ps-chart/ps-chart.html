@@ -37,7 +37,7 @@
                 }
             },
             _isActiveChanged: function () {
-                if (this.isActive) {
+                if (this.isActive && this.data) {
                     var labels = [];
                     var desktop = {
                         label: 'Desktop',
@@ -87,6 +87,7 @@
             },
             handleResponse: function (event) {
                 this.data = event.detail.response;
+                this._isActiveChanged();
             }
         });
     }());
