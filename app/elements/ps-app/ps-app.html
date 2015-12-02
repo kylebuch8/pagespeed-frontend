@@ -28,20 +28,22 @@
                 padding: 16px;
                 border-bottom: 1px solid #23313F;
                 text-transform: uppercase;
+                text-decoration: none;
+                color: var(--app-secondary-text-color);
             }
         </style>
 
         <app-drawer-layout>
             <div drawer>
-                <iron-selector class="nav-menu" selected="{{page}}" attr-for-selected="name">
-                    <a name="score">Home</a>
-                    <a name="chart">Chart</a>
+                <iron-selector class="nav-menu" attr-for-selected="data-route" selected="{{route}}">
+                    <a data-route="home" href="/">Home</a>
+                    <a data-route="chart" href="/chart">Chart</a>
                 </iron-selector>
             </div>
             <div main>
-                <iron-pages selected="{{page}}" attr-for-selected="name">
-                    <ps-score name="score"></ps-score>
-                    <ps-chart id="chart" name="chart"></ps-chart>
+                <iron-pages attr-for-selected="data-route" selected="{{route}}">
+                    <ps-score data-route="home"></ps-score>
+                    <ps-chart data-route="chart"></ps-chart>
                 </iron-pages>
             </div>
         </app-drawer-layout>
@@ -52,12 +54,6 @@
     (function () {
         Polymer({
             is: 'ps-app',
-            properties: {
-                page: {
-                    type: String,
-                    value: 'score'
-                }
-            },
             behaviors: [Polymer.IronSelectableBehavior],
             listeners: {
                 'iron-select': 'onPageSelect',
