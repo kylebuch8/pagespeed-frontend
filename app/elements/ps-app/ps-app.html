@@ -16,6 +16,12 @@
                 --app-drawer-background-color: var(--app-secondary-color);
             }
 
+            [main] app-toolbar {
+                border-bottom: 1px solid #ddd;
+                background-color: #fff;
+                color: #444;
+            }
+
             .nav-menu {
                 font-family: "Open sans", sans-serif;
                 font-size: 14px;
@@ -46,6 +52,10 @@
                 </iron-selector>
             </div>
             <div main>
+                <app-toolbar>
+                    <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+                    <div title class="flex">Page Speed Viewer</div>
+                </app-toolbar>
                 <iron-pages attr-for-selected="data-route" selected="{{route}}">
                     <ps-score data-route="home"></ps-score>
                     <ps-chart data-route="chart"></ps-chart>
