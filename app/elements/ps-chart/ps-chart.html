@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../chartjs-element/chartjs-element.html">
+<link rel="import" href="../moment-element/moment-element.html">
 
 <dom-module is="ps-chart">
     <template>
@@ -62,7 +63,7 @@
                     };
 
                     this.data.forEach(function (datum) {
-                        labels.push(datum.date);
+                        labels.push(moment(datum.date).format('MMM DD'));
 
                         datum.results.forEach(function (result) {
                             if (result.strategy === 'mobile') {
