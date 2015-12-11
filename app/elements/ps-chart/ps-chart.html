@@ -1,5 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../chartjs-element/chartjs-element.html">
 <link rel="import" href="../moment-element/moment-element.html">
 
@@ -12,16 +15,34 @@
                 padding: 16px;
                 @apply(--layout-vertical);
             }
+
+            @media(min-width: 800px) {
+                .dropdown {
+                    max-width: 50%;
+                }
+            }
         </style>
+
         <iron-ajax
             auto
-            url="http://localhost:8000/"
+            url="http://localhost:8000/pages"
             handle-as="json"
-            on-response="handleResponse"></iron-ajax>
+            last-response="{{pages}}"
+            on-response="pagesResponse"></iron-ajax>
 
-        <h1>Chart</h1>
+        <iron-ajax
+            id="scoreXhr"
+            handle-as="json"
+            on-response="scoresResponse"></iron-ajax>
+
+        <paper-dropdown-menu class="dropdown" label="Page">
+            <paper-menu id="pageDropdown" class="dropdown-content" selected="0" on-iron-select="siteSelectHandler">
+                <template is="dom-repeat" items="[[pages]]">
+                    <paper-item>[[item.url]]</paper-item>
+                </template>
+            </paper-menu>
+        </paper-dropdown-menu>
         <canvas id="myChart" width="1000" height="600"></canvas>
-
     </template>
 </dom-module>
 
@@ -35,7 +56,9 @@
                     type: Boolean,
                     value: false,
                     observer: '_isActiveChanged'
-                }
+                },
+                chart: Object,
+                pages: Array
             },
             _isActiveChanged: function () {
                 if (this.isActive && this.data) {
@@ -79,14 +102,33 @@
                         datasets: [desktop, mobile]
                     };
 
+                    if (this.chart) {
+                        this.chart.destroy();
+                    }
+
                     var ctx = this.$.myChart.getContext('2d');
                     var chartDisplay = new Chart(ctx);
-                    chartDisplay.Line(data, {
+
+                    this.chart = chartDisplay.Line(data, {
                         scaleBeginAtZero: true
                     });
                 }
             },
             handleResponse: function (event) {
+                this.data = event.detail.response;
+                this._isActiveChanged();
+            },
+            pagesResponse: function (event) {
+                this.pages = event.detail.response;
+            },
+            siteSelectHandler: function () {
+                var requestUrl = 'http://localhost:8000/scores/';
+                var pageUrl = this.pages[this.$.pageDropdown.selected];
+
+                this.$.scoreXhr.url = requestUrl + encodeURIComponent(pageUrl.url);
+                this.$.scoreXhr.generateRequest();
+            },
+            scoresResponse: function (event) {
                 this.data = event.detail.response;
                 this._isActiveChanged();
             }
