@@ -13,7 +13,8 @@
     "page": "visionmedia/page.js#~1.6.3",
     "app-layout": "PolymerLabs/app-layout#~0.0.5",
     "Chart.js": "~1.0.2",
-    "moment": "~2.10.6"
+    "moment": "~2.10.6",
+    "paper-card": "PolymerElements/paper-card#~1.0.8"
   },
   "devDependencies": {
     "web-component-tester": "*",
