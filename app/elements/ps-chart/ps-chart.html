@@ -32,6 +32,7 @@
 
         <iron-ajax
             id="scoreXhr"
+            url="http://localhost:8000/scores"
             handle-as="json"
             on-response="scoresResponse"></iron-ajax>
 
@@ -122,10 +123,9 @@
                 this.pages = event.detail.response;
             },
             siteSelectHandler: function () {
-                var requestUrl = 'http://localhost:8000/scores/';
                 var pageUrl = this.pages[this.$.pageDropdown.selected];
 
-                this.$.scoreXhr.url = requestUrl + encodeURIComponent(pageUrl.url);
+                this.$.scoreXhr.params = { 'site': pageUrl.url };
                 this.$.scoreXhr.generateRequest();
             },
             scoresResponse: function (event) {

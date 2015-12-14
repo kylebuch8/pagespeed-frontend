@@ -21,6 +21,7 @@ var path = require('path');
 var fs = require('fs');
 var glob = require('glob');
 var less = require('gulp-less');
+var config = require('./config');
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -182,6 +183,12 @@ gulp.task('precache', function (callback) {
   });
 });
 
+gulp.task('replaceServerName', function () {
+    return gulp.src(['./app/**/*.html'])
+        .pipe($.if('*.html', $.replace('http://localhost:8000', config.productionUrl)))
+        .pipe(gulp.dest('dist'));
+});
+
 // Clean Output Directory
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
@@ -227,6 +234,7 @@ gulp.task('default', ['clean'], function (cb) {
   runSequence(
     ['copy', 'styles'],
     'elements',
+    'replaceServerName',
     ['jshint', 'images', 'fonts', 'html'],
     'vulcanize', 'precache',
     cb);
