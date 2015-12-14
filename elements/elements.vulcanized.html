@@ -20694,17 +20694,17 @@ module.exports = Array.isArray || function (arr) {
 });</script>
 <script>
     window.addEventListener('WebComponentsReady', function () {
+        page.base('/#');
+
         page('/', function () {
             app.route = 'home';
         });
 
-        page('/chart', function () {
+        page('chart', function () {
             app.route = 'chart';
         });
 
-        page({
-            hashbang: true
-        });
+        page();
     });
 </script>
 </head><body><div hidden="" by-vulcanize=""><dom-module id="iron-pages" assetpath="../bower_components/iron-pages/">
@@ -25160,8 +25160,8 @@ module.exports = Array.isArray || function (arr) {
         <app-drawer-layout>
             <div drawer="">
                 <iron-selector class="nav-menu" attr-for-selected="data-route" selected="{{route}}">
-                    <a data-route="home" href="/">Home</a>
-                    <a data-route="chart" href="/chart">Chart</a>
+                    <a data-route="home" href="#/">Home</a>
+                    <a data-route="chart" href="#/chart">Chart</a>
                 </iron-selector>
             </div>
             <div main="">
