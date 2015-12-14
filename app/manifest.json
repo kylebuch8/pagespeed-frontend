@@ -1,0 +1,8 @@
+{
+    "name": "Page Speed",
+    "short_name": "Page Speed",
+    "icons": [{
+        "src": "images/touch/chrome-touch-icon-192x192.png",
+        "sizes": "192x192"
+    }]
+}
