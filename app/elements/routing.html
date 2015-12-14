@@ -1,16 +1,16 @@
 <script src="../../bower_components/page/page.js"></script>
 <script>
     window.addEventListener('WebComponentsReady', function () {
+        page.base('/#');
+
         page('/', function () {
             app.route = 'home';
         });
 
-        page('/chart', function () {
+        page('chart', function () {
             app.route = 'chart';
         });
 
-        page({
-            hashbang: true
-        });
+        page();
     });
 </script>
