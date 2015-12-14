@@ -20694,7 +20694,9 @@ module.exports = Array.isArray || function (arr) {
 });</script>
 <script>
     window.addEventListener('WebComponentsReady', function () {
-        page.base('/#');
+        page.base((function () {
+            return location.pathname + '#';
+        }()));
 
         page('/', function () {
             app.route = 'home';

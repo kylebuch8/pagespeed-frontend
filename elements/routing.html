@@ -1,7 +1,9 @@
 <script src="../../bower_components/page/page.js"></script>
 <script>
     window.addEventListener('WebComponentsReady', function () {
-        page.base('/#');
+        page.base((function () {
+            return location.pathname + '#';
+        }()));
 
         page('/', function () {
             app.route = 'home';
