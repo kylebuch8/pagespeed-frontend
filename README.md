@@ -1,6 +1,6 @@
 # Page Speed Viewer
 
-Want to put a front-end on your Openshift page speed backend?
+Want to put a front-end on your OpenShift Page Speed backend?
 
 Look no further.
 
