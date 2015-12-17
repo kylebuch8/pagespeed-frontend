@@ -7,3 +7,43 @@ body {
 .text-muted {
     color: #777;
 }
+
+.line-legend {
+    display: -webkit-flex;
+    display: flex;
+    position: absolute;
+    right: 48px;
+    bottom: 87px;
+    margin: 0;
+    padding: 0;
+    border-radius: 3px;
+    background-color: #fff;
+    color: #333;
+    padding: 8px;
+}
+
+.line-legend li {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    list-style-type: none;
+    margin-right: 16px;
+}
+
+.line-legend li:last-child {
+    margin-right: 0;
+}
+
+.line-legend span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+@media (min-width: 900px) {
+    .line-legend {
+        bottom: 55px;
+    }
+}
