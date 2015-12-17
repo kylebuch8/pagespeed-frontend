@@ -25023,6 +25023,7 @@ module.exports = Array.isArray || function (arr) {
             </paper-menu>
         </paper-dropdown-menu>
         <canvas id="myChart" width="1000" height="600"></canvas>
+        <div id="legend"></div>
     </template>
 </dom-module>
 
@@ -25090,8 +25091,11 @@ module.exports = Array.isArray || function (arr) {
                     var chartDisplay = new Chart(ctx);
 
                     this.chart = chartDisplay.Line(data, {
-                        scaleBeginAtZero: true
+                        scaleBeginAtZero: true,
+                        legendTemplate : '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
                     });
+
+                    this.$.legend.innerHTML = this.chart.generateLegend();
                 }
             },
             handleResponse: function (event) {
