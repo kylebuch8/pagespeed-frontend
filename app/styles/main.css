@@ -41,9 +41,3 @@ body {
     height: 20px;
     margin-right: 8px;
 }
-
-@media (min-width: 900px) {
-    .line-legend {
-        bottom: 55px;
-    }
-}
